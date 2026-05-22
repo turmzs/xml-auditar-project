@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00">
+    <infNFSe Id="NFS42082031208172815000160000000004073626020889182582">
+        <xLocEmi>ITAJAÍ</xLocEmi>
+        <xLocPrestacao>ITAJAÍ</xLocPrestacao>
+        <nNFSe>40736</nNFSe>
+        <cLocIncid>4208203</cLocIncid>
+        <xLocIncid>ITAJAÍ</xLocIncid>
+        <xTribNac>33.01.01 Serviços de desembaraço aduaneiro, comissários, despachantes e congêneres.</xTribNac>
+        <verAplic>04.01.47.0008</verAplic>
+        <ambGer>1</ambGer>
+        <tpEmis>2</tpEmis>
+        <cStat>100</cStat>
+        <dhProc>2026-02-02T10:35:37-03:00</dhProc>
+        <nDFSe>40736</nDFSe>
+        <emit>
+            <CNPJ>08172815000160</CNPJ>
+            <IM>285237</IM>
+            <xNome>KRUEGER ASSESSORIA DE IMPORTACAO E EXPORTACAO LTDA</xNome>
+            <xFant>KRUEGER GESTAO ADUANEIRA</xFant>
+            <enderNac>
+                <xLgr>MINISTRO  VICTOR KONDER</xLgr>
+                <nro>200</nro>
+                <xCpl>SALA 101</xCpl>
+                <xBairro>CENTRO</xBairro>
+                <cMun>4208203</cMun>
+                <UF>SC</UF>
+                <CEP>88301700</CEP>
+            </enderNac>
+            <email>cristhiane@krg-ce.com.br</email>
+        </emit>
+        <valores>
+            <vBC>1878.00</vBC>
+            <pAliqAplic>3.00</pAliqAplic>
+            <vISSQN>56.34</vISSQN>
+            <vLiq>1762.50</vLiq>
+        </valores>
+        <DPS versao="1.00">
+            <infDPS Id="DPS420820320817281500016001001000000000004532">
+                <tpAmb>1</tpAmb>
+                <dhEmi>2026-02-02T10:34:19-03:00</dhEmi>
+                <verAplic>04.01.47.0008</verAplic>
+                <serie>1001</serie>
+                <nDPS>4532</nDPS>
+                <dCompet>2026-02-02</dCompet>
+                <tpEmit>1</tpEmit>
+                <cLocEmi>4208203</cLocEmi>
+                <prest>
+                    <CNPJ>08172815000160</CNPJ>
+                    <IM>285237</IM>
+                    <email>cristhiane@krg-ce.com.br</email>
+                    <regTrib>
+                        <opSimpNac>1</opSimpNac>
+                        <regEspTrib>0</regEspTrib>
+                    </regTrib>
+                </prest>
+                <toma>
+                    <CNPJ>24207990000100</CNPJ>
+                    <xNome>R A B DA SILVA LTDA</xNome>
+                    <end>
+                        <endNac>
+                            <cMun>2408102</cMun>
+                            <CEP>59054180</CEP>
+                        </endNac>
+                        <xLgr>AVENIDA NASCIMENTO DE CASTRO</xLgr>
+                        <nro>9999</nro>
+                        <xCpl>LOTE LOTE 111</xCpl>
+                        <xBairro>DIX-SEPT ROSADO</xBairro>
+                    </end>
+                </toma>
+                <serv>
+                    <locPrest>
+                        <cLocPrestacao>4208203</cLocPrestacao>
+                    </locPrest>
+                    <cServ>
+                        <cTribNac>330101</cTribNac>
+                        <xDescServ>DESEMBARACO ADUANEIRO DE IMPORTACAO / LICENCIAMENTO DE IMPORTACAO - KI-14862-25 (GI-25-499)</xDescServ>
+                        <cIntContrib>46943565</cIntContrib>
+                    </cServ>
+                    <infoCompl>
+                        <xInfComp>| Natureza da operação: 101 - ISS devido a Itajaí, a ser recolhido pelo prestador do serviço | - Consulte a autenticidade desta Nota Fiscal no portal da NFS-e de Itajaí: http://nfse.itajai.sc.gov.br/- Documento Fiscal emitido por contribuinte NÃO optante pelo Simples Nacional</xInfComp>
+                    </infoCompl>
+                </serv>
+                <valores>
+                    <vServPrest>
+                        <vServ>1878.00</vServ>
+                    </vServPrest>
+                    <trib>
+                        <tribMun>
+                            <tribISSQN>1</tribISSQN>
+                            <tpRetISSQN>1</tpRetISSQN>
+                        </tribMun>
+                        <tribFed>
+                            <vRetIRRF>28.17</vRetIRRF>
+                            <vRetCSLL>18.78</vRetCSLL>
+                        </tribFed>
+                        <totTrib>
+                            <vTotTrib>
+                                <vTotTribFed>252.59</vTotTribFed>
+                                <vTotTribEst>0.00</vTotTribEst>
+                                <vTotTribMun>71.36</vTotTribMun>
+                            </vTotTrib>
+                        </totTrib>
+                    </trib>
+                <OutrasRetencoes>68.55</OutrasRetencoes></valores>
+            </infDPS>
+        </DPS>
+    </infNFSe>
+</NFSe>

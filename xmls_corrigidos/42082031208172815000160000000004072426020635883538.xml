@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='utf-8'?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00">
+    <infNFSe Id="NFS42082031208172815000160000000004072426020635883538">
+        <xLocEmi>ITAJAÍ</xLocEmi>
+        <xLocPrestacao>ITAJAÍ</xLocPrestacao>
+        <nNFSe>40724</nNFSe>
+        <cLocIncid>4208203</cLocIncid>
+        <xLocIncid>ITAJAÍ</xLocIncid>
+        <xTribNac>33.01.01 Serviços de desembaraço aduaneiro, comissários, despachantes e congêneres.</xTribNac>
+        <verAplic>04.01.47.0008</verAplic>
+        <ambGer>1</ambGer>
+        <tpEmis>2</tpEmis>
+        <cStat>100</cStat>
+        <dhProc>2026-02-02T08:30:44-03:00</dhProc>
+        <nDFSe>40724</nDFSe>
+        <emit>
+            <CNPJ>08172815000160</CNPJ>
+            <IM>285237</IM>
+            <xNome>KRUEGER ASSESSORIA DE IMPORTACAO E EXPORTACAO LTDA</xNome>
+            <xFant>KRUEGER GESTAO ADUANEIRA</xFant>
+            <enderNac>
+                <xLgr>MINISTRO  VICTOR KONDER</xLgr>
+                <nro>200</nro>
+                <xCpl>SALA 101</xCpl>
+                <xBairro>CENTRO</xBairro>
+                <cMun>4208203</cMun>
+                <UF>SC</UF>
+                <CEP>88301700</CEP>
+            </enderNac>
+            <email>cristhiane@krg-ce.com.br</email>
+        </emit>
+        <valores>
+            <vBC>1625.00</vBC>
+            <pAliqAplic>3.00</pAliqAplic>
+            <vISSQN>48.75</vISSQN>
+            <vLiq>1525.06</vLiq>
+        </valores>
+        <DPS versao="1.00">
+            <infDPS Id="DPS420820320817281500016001001000000000004520">
+                <tpAmb>1</tpAmb>
+                <dhEmi>2026-02-02T08:27:55-03:00</dhEmi>
+                <verAplic>04.01.47.0008</verAplic>
+                <serie>1001</serie>
+                <nDPS>4520</nDPS>
+                <dCompet>2026-02-02</dCompet>
+                <tpEmit>1</tpEmit>
+                <cLocEmi>4208203</cLocEmi>
+                <prest>
+                    <CNPJ>08172815000160</CNPJ>
+                    <IM>285237</IM>
+                    <email>cristhiane@krg-ce.com.br</email>
+                    <regTrib>
+                        <opSimpNac>1</opSimpNac>
+                        <regEspTrib>0</regEspTrib>
+                    </regTrib>
+                </prest>
+                <toma>
+                    <CNPJ>83475913004006</CNPJ>
+                    <xNome>PBG S/A</xNome>
+                    <end>
+                        <endNac>
+                            <cMun>2704708</cMun>
+                            <CEP>57160000</CEP>
+                        </endNac>
+                        <xLgr>ROD DIVALDO SURUAGY KM 12</xLgr>
+                        <nro>1</nro>
+                        <xCpl>AREA B</xCpl>
+                        <xBairro>POLO MULTIFABRIL INDUSTRIAL JOSE APRIGIO VILELA</xBairro>
+                    </end>
+                </toma>
+                <serv>
+                    <locPrest>
+                        <cLocPrestacao>4208203</cLocPrestacao>
+                    </locPrest>
+                    <cServ>
+                        <cTribNac>330101</cTribNac>
+                        <xDescServ>KE-7117-26 - 30008/2026,PBG
+
+KE-7193-26 - 30031,30330,30035/26
+
+KE-7156-26 - 30011/2026, PBG
+
+KE-7094-26 - 30285/2025
+
+KE-7220-26 - 30041, 30046/2026
+
+KE-7218-26 - 30037/2026
+
+KE-7116-26 - 30003/2026,PBG
+
+KE-7158-26 - 30016/2026, PBG
+
+KE-7167-26 - 30281,30282,30283/2025, PBG
+
+KE-7077-25 - 30278,30279,30280/2025, PBG
+
+KE-7129-26 - 30012,30013,30014/2026,PBA
+
+KE-7155-26 - 30271/2025, PBG
+
+KE-7219-26 - 30045, 30038, 30039, 30040/2026</xDescServ>
+                        <cIntContrib>46939578</cIntContrib>
+                    </cServ>
+                    <infoCompl>
+                        <xInfComp>| Natureza da operação: 101 - ISS devido a Itajaí, a ser recolhido pelo prestador do serviço | - Consulte a autenticidade desta Nota Fiscal no portal da NFS-e de Itajaí: http://nfse.itajai.sc.gov.br/- Documento Fiscal emitido por contribuinte NÃO optante pelo Simples Nacional</xInfComp>
+                    </infoCompl>
+                </serv>
+                <valores>
+                    <vServPrest>
+                        <vServ>1625.00</vServ>
+                    </vServPrest>
+                    <trib>
+                        <tribMun>
+                            <tribISSQN>1</tribISSQN>
+                            <tpRetISSQN>1</tpRetISSQN>
+                        </tribMun>
+                        <tribFed>
+                            <vRetIRRF>24.38</vRetIRRF>
+                            <vRetCSLL>16.25</vRetCSLL>
+                        </tribFed>
+                        <totTrib>
+                            <vTotTrib>
+                                <vTotTribFed>218.56</vTotTribFed>
+                                <vTotTribEst>0.00</vTotTribEst>
+                                <vTotTribMun>61.75</vTotTribMun>
+                            </vTotTrib>
+                        </totTrib>
+                    </trib>
+                <OutrasRetencoes>59.31</OutrasRetencoes></valores>
+            </infDPS>
+        </DPS>
+    </infNFSe>
+</NFSe>

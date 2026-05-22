@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00">
+    <infNFSe Id="NFS42082031208172815000160000000004104226020025730081">
+        <xLocEmi>ITAJAÍ</xLocEmi>
+        <xLocPrestacao>ITAJAÍ</xLocPrestacao>
+        <nNFSe>41042</nNFSe>
+        <cLocIncid>4208203</cLocIncid>
+        <xLocIncid>ITAJAÍ</xLocIncid>
+        <xTribNac>33.01.01 Serviços de desembaraço aduaneiro, comissários, despachantes e congêneres.</xTribNac>
+        <verAplic>04.01.48.0002</verAplic>
+        <ambGer>1</ambGer>
+        <tpEmis>2</tpEmis>
+        <cStat>100</cStat>
+        <dhProc>2026-02-16T10:15:51-03:00</dhProc>
+        <nDFSe>41042</nDFSe>
+        <emit>
+            <CNPJ>08172815000160</CNPJ>
+            <IM>285237</IM>
+            <xNome>KRUEGER ASSESSORIA DE IMPORTACAO E EXPORTACAO LTDA</xNome>
+            <xFant>KRUEGER GESTAO ADUANEIRA</xFant>
+            <enderNac>
+                <xLgr>MINISTRO  VICTOR KONDER</xLgr>
+                <nro>200</nro>
+                <xCpl>SALA 101</xCpl>
+                <xBairro>CENTRO</xBairro>
+                <cMun>4208203</cMun>
+                <UF>SC</UF>
+                <CEP>88301700</CEP>
+            </enderNac>
+            <email>cristhiane@krg-ce.com.br</email>
+        </emit>
+        <valores>
+            <vBC>1041.55</vBC>
+            <pAliqAplic>3.00</pAliqAplic>
+            <vISSQN>31.25</vISSQN>
+            <vLiq>977.49</vLiq>
+        </valores>
+        <DPS versao="1.00">
+            <infDPS Id="DPS420820320817281500016001001000000000004828">
+                <tpAmb>1</tpAmb>
+                <dhEmi>2026-02-16T10:14:54-03:00</dhEmi>
+                <verAplic>04.01.48.0002</verAplic>
+                <serie>1001</serie>
+                <nDPS>4828</nDPS>
+                <dCompet>2026-02-16</dCompet>
+                <tpEmit>1</tpEmit>
+                <cLocEmi>4208203</cLocEmi>
+                <prest>
+                    <CNPJ>08172815000160</CNPJ>
+                    <IM>285237</IM>
+                    <email>cristhiane@krg-ce.com.br</email>
+                    <regTrib>
+                        <opSimpNac>1</opSimpNac>
+                        <regEspTrib>0</regEspTrib>
+                    </regTrib>
+                </prest>
+                <toma>
+                    <CNPJ>28435376000229</CNPJ>
+                    <xNome>NEWPOP INDUSTRIA QUIMICA LTDA</xNome>
+                    <end>
+                        <endNac>
+                            <cMun>3546702</cMun>
+                            <CEP>13510000</CEP>
+                        </endNac>
+                        <xLgr>RODOVIA WASHINGTON LUIZ</xLgr>
+                        <nro>1</nro>
+                        <xCpl>KM 168 - 1</xCpl>
+                        <xBairro>RURAL</xBairro>
+                    </end>
+                </toma>
+                <serv>
+                    <locPrest>
+                        <cLocPrestacao>4208203</cLocPrestacao>
+                    </locPrest>
+                    <cServ>
+                        <cTribNac>330101</cTribNac>
+                        <xDescServ>KE-7328-26 - 007/2026</xDescServ>
+                        <cIntContrib>47202875</cIntContrib>
+                    </cServ>
+                    <infoCompl>
+                        <xInfComp>| Natureza da operação: 101 - ISS devido a Itajaí, a ser recolhido pelo prestador do serviço | - Consulte a autenticidade desta Nota Fiscal no portal da NFS-e de Itajaí: http://nfse.itajai.sc.gov.br/- Documento Fiscal emitido por contribuinte NÃO optante pelo Simples Nacional</xInfComp>
+                    </infoCompl>
+                </serv>
+                <valores>
+                    <vServPrest>
+                        <vServ>1041.55</vServ>
+                    </vServPrest>
+                    <trib>
+                        <tribMun>
+                            <tribISSQN>1</tribISSQN>
+                            <tpRetISSQN>1</tpRetISSQN>
+                        </tribMun>
+                        <tribFed>
+                            <vRetIRRF>15.62</vRetIRRF>
+                            <vRetCSLL>10.42</vRetCSLL>
+                        </tribFed>
+                        <totTrib>
+                            <vTotTrib>
+                                <vTotTribFed>140.09</vTotTribFed>
+                                <vTotTribEst>0.00</vTotTribEst>
+                                <vTotTribMun>39.58</vTotTribMun>
+                            </vTotTrib>
+                        </totTrib>
+                    </trib>
+                <OutrasRetencoes>38.02</OutrasRetencoes></valores>
+            </infDPS>
+        </DPS>
+    </infNFSe>
+</NFSe>

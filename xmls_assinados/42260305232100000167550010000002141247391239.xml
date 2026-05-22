@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><NFe xmlns="http://www.portalfiscal.inf.br/nfe"><infNFe Id="NFe42260305232100000167550010000002141247391239" versao="4.00"><ide><cUF>42</cUF><cNF>24739123</cNF><natOp>DevoluÃ§Ã£o de mercadoria</natOp><mod>55</mod><serie>1</serie><nNF>214</nNF><dhEmi>2026-03-06T14:34:43-03:00</dhEmi><dhSaiEnt>2026-03-06T14:34:43-03:00</dhSaiEnt><tpNF>1</tpNF><idDest>1</idDest><cMunFG>4211306</cMunFG><tpImp>1</tpImp><tpEmis>1</tpEmis><cDV>9</cDV><tpAmb>1</tpAmb><finNFe>4</finNFe><indFinal>0</indFinal><indPres>9</indPres><indIntermed>0</indIntermed><procEmi>0</procEmi><verProc>0.1.0</verProc><NFref><refNFe>42251045894065000166550010000009531757543069</refNFe></NFref></ide><emit><CNPJ>05232100000167</CNPJ><xNome>POTENCHIP LTDA</xNome><xFant>POTENCHIP LTDA</xFant><enderEmit><xLgr>Rua Valdemar Bornhausen</xLgr><nro>800</nro><xBairro>GravatÃ¡</xBairro><cMun>4211306</cMun><xMun>Navegantes</xMun><UF>SC</UF><CEP>88372730</CEP><cPais>1058</cPais><xPais>Brasil</xPais><fone>4799805090</fone></enderEmit><IE>254451225</IE><CRT>1</CRT></emit><dest><CNPJ>45894065000166</CNPJ><xNome>NEPAZA DISTRIBUIDORA DE AUTO PECAS LTDA.</xNome><enderDest><xLgr>R ANTONIO MULLER REIS</xLgr><nro>31</nro><xBairro>CORDEIROS</xBairro><cMun>4208203</cMun><xMun>ITAJAI</xMun><UF>SC</UF><CEP>88310220</CEP><cPais>1058</cPais><xPais>Brasil</xPais><fone>5547992468350</fone></enderDest><indIEDest>1</indIEDest><IE>261637487</IE><email>nepaza@nepaza.com.br</email></dest><det nItem="1"><prod><cProd>001879</cProd><cEAN>SEM GTIN</cEAN><xProd>SENSOR MAP FORD RANGER/ TROLLER 3.0 POWERSTROKE T4 05/12</xProd><NCM>87089990</NCM><CFOP>5202</CFOP><uCom>UN</uCom><qCom>1.0000</qCom><vUnCom>350.00</vUnCom><vProd>350.00</vProd><cEANTrib>SEM GTIN</cEANTrib><uTrib>UN</uTrib><qTrib>1.0000</qTrib><vUnTrib>350.00</vUnTrib><indTot>1</indTot></prod><imposto><ICMS><ICMSSN900><orig>0</orig><CSOSN>900</CSOSN><modBC>3</modBC><vBC>0</vBC><pICMS>0</pICMS><vICMS>0</vICMS></ICMSSN900></ICMS><PIS><PISOutr><CST>99</CST><vBC>0</vBC><pPIS>0</pPIS><vPIS>0</vPIS></PISOutr></PIS><COFINS><COFINSOutr><CST>99</CST><vBC>0</vBC><pCOFINS>0</pCOFINS><vCOFINS>0</vCOFINS></COFINSOutr></COFINS></imposto></det><total><ICMSTot><vBC>0</vBC><vICMS>0</vICMS><vICMSDeson>0</vICMSDeson><vFCP>0</vFCP><vBCST>0</vBCST><vST>0</vST><vFCPST>0</vFCPST><vFCPSTRet>0</vFCPSTRet><vProd>350.00</vProd><vFrete>0</vFrete><vSeg>0</vSeg><vDesc>0</vDesc><vII>0</vII><vIPI>0</vIPI><vIPIDevol>0</vIPIDevol><vPIS>0</vPIS><vCOFINS>0</vCOFINS><vOutro>0</vOutro><vNF>350.00</vNF></ICMSTot></total><transp><modFrete>9</modFrete></transp><pag><detPag><tPag>90</tPag><vPag>0</vPag></detPag></pag><infRespTec><CNPJ>07504505000132</CNPJ><xContato>Ricardo Acras</xContato><email>contato@focusnfe.com.br</email><fone>41991820810</fone></infRespTec></infNFe><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#NFe42260305232100000167550010000002141247391239"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>U8IgjbDGmRPSinve4s9TngiwPCQ=</DigestValue></Reference></SignedInfo><SignatureValue>XTsSq+OMh8nZ0oRGY6MCr+sBgVHGfChQkM5rTwlg7cNvnJXnIwjBceTNTbB74P0W4LXPlSfeIXTB
+KujOe66oY50q1QbYqIppWDCjoDNep69OVvDlAg7rAWCMdr0txoJPpHr0TOXuMeuBSeBknvPMjz3L
+gA8UYL1jVqb1n7gzHbgzx9hJY5tKOw30Z+gMBtQPKBybOn48PcN11a6rK6QkKU+yQsY3wEUFg6aj
+rHdxiaDc/u/e9T7l/5u7NZGA2biYnOB6Ie1XgNyW188i6JchVd7Rc5L5VZfUbhWRarniCrZiEBKc
+YRFCkKecBwVs/3C48PcjeXhNigmA26aK+jRNhg==</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIH0DCCBbigAwIBAgIKL+O5JocPweQUXDANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJCUjEW
+MBQGA1UECwwNQUMgU3luZ3VsYXJJRDETMBEGA1UECgwKSUNQLUJyYXNpbDEfMB0GA1UEAwwWQUMg
+U3luZ3VsYXJJRCBNdWx0aXBsYTAeFw0yNTA2MTExOTA5NDVaFw0yNjA2MTExOTA5NDVaMIHDMQsw
+CQYDVQQGEwJCUjETMBEGA1UECgwKSUNQLUJyYXNpbDEiMCAGA1UECwwZQ2VydGlmaWNhZG8gRGln
+aXRhbCBQSiBBMTEZMBcGA1UECwwQVmlkZW9jb25mZXJlbmNpYTEXMBUGA1UECwwOMjYxNjIzNDEw
+MDAxNTcxHzAdBgNVBAsMFkFDIFN5bmd1bGFySUQgTXVsdGlwbGExJjAkBgNVBAMMHVBPVEVOQ0hJ
+UCBMVERBOjA1MjMyMTAwMDAwMTY3MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnc2W
+CypwNGTAIuB1Ms6aUdbONZoMBOoHPGZmnass0YlfIxQ0idzcPNg1pdXxpTSqrwpA+XXlp+3CtV7D
+CuVscxPfLDk3NJmCcLJYWs662+0JWLfinKBaxGozjFI+uVdgfzwWSQ6itHZGQ+ORU+WT+YUgLraT
+/JXgKrtnxM8bHYAhq+OyhZcJCWPYGk1q8pgt8rBbnYkhnvI/KM8AlwYTn7WmUI653IuO4rhkTGLY
+fBubeobgZZo1g4mmHSLNR3QDmrBp/nVdtia/VwvnW8iRsJ3eXGWL4/Wjcz55TG4xJm/58vzWgimo
+TLuTWXNUCWYmWMaA8GMK/PkujSEYXrMNoQIDAQABo4IDKzCCAycwDgYDVR0PAQH/BAQDAgXgMB0G
+A1UdJQQWMBQGCCsGAQUFBwMEBggrBgEFBQcDAjAJBgNVHRMEAjAAMB8GA1UdIwQYMBaAFJPh/34d
+5fXkTeE5YoshaZXmr3IWMB0GA1UdDgQWBBS33s6Izo5quC9GOR56jj5hn+ZW4TB/BggrBgEFBQcB
+AQRzMHEwbwYIKwYBBQUHMAKGY2h0dHA6Ly9zeW5ndWxhcmlkLmNvbS5ici9yZXBvc2l0b3Jpby9h
+Yy1zeW5ndWxhcmlkLW11bHRpcGxhL2NlcnRpZmljYWRvcy9hYy1zeW5ndWxhcmlkLW11bHRpcGxh
+LnA3YjCBggYDVR0gBHsweTB3BgdgTAECAYEFMGwwagYIKwYBBQUHAgEWXmh0dHA6Ly9zeW5ndWxh
+cmlkLmNvbS5ici9yZXBvc2l0b3Jpby9hYy1zeW5ndWxhcmlkLW11bHRpcGxhL2RwYy9kcGMtYWMt
+c3luZ3VsYXJJRC1tdWx0aXBsYS5wZGYwgb8GA1UdEQSBtzCBtKAeBgVgTAEDAqAVBBNDQVJMT1Mg
+RU1JUiBTRVNUUkVNoBkGBWBMAQMDoBAEDjA1MjMyMTAwMDAwMTY3oEIGBWBMAQMEoDkENzEwMDgx
+OTY5MDMxMDM1NzM5MDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDCgFwYFYEwB
+AwegDgQMMDAwMDAwMDAwMDAwgRpwb3RlbmNoaXBAcG90ZW5jaGlwLmNvbS5icjCB4gYDVR0fBIHa
+MIHXMG+gbaBrhmlodHRwOi8vaWNwLWJyYXNpbC5zeW5ndWxhcmlkLmNvbS5ici9yZXBvc2l0b3Jp
+by9hYy1zeW5ndWxhcmlkLW11bHRpcGxhL2xjci9sY3ItYWMtc3luZ3VsYXJpZC1tdWx0aXBsYS5j
+cmwwZKBioGCGXmh0dHA6Ly9zeW5ndWxhcmlkLmNvbS5ici9yZXBvc2l0b3Jpby9hYy1zeW5ndWxh
+cmlkLW11bHRpcGxhL2xjci9sY3ItYWMtc3luZ3VsYXJpZC1tdWx0aXBsYS5jcmwwDQYJKoZIhvcN
+AQELBQADggIBAIbs04EW1odO2dD6oAlRJodH+WHBnMMzxxaMcoQuh7/ngpDAIVCbeQt9Q/sV5uin
+vx6tDPLdE7a6dVY+i94fAZhQD/FQMy9DUNUT+4WCAnHH3AIKWQk7QqmhBdvAJfVNCjYBerYOgU4G
+AyRAFILlSQ/3BbFg38JFQyIBTzCEpetBznuR81Urc30Mgd1KD2xmRuhP4ART9QQHSfkfNWPJVh09
+5puVO7Em7H478AScLIZuP1O90K77Q/4W3xlc0UOxIeJnv4sAE2ff+TrBKl9AZIOVeT7Wv2TiIOBY
+e0FIggpTLCUbuoIjoVESCl2anQorp3k5t3f0fXUpBY3K/Lm4kGCCDsh1i+oM6dSNrzpqGZsMwExh
+BNiBR8JiXTQcr+MAGfQhPQboD7gKfzG2aTLwPkdJ9E6XcAh0P5YOFIjNmwb4SlvX3p8Qgp5kZQFz
+5etg201YuExE5n71qEqVaLZF2/f2vAwxv4PBtwB2Z/dtQS4PImcNBtoDFKQxF9Rp/TlLx0ECnxkh
+fvWMa2CtOuXXMgrH78yAtDWaWEorugs4m80GSn0LhoSx3hvu1muOBnhB63MtM8c8xDIlTj5Tpmh8
+xd/y5q9gWKpwU8/EkWCVg2L5r8TRLwL8WCGF+wO71UvTrsZSS01+rBq6EAQpVaEiYIuzr7NpVJq0
+3YT5exUdXW45</X509Certificate></X509Data></KeyInfo></Signature></NFe><protNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><infProt><tpAmb>1</tpAmb><verAplic>SVRS2601161142DR</verAplic><chNFe>42260305232100000167550010000002141247391239</chNFe><dhRecbto>2026-03-06T14:34:57-03:00</dhRecbto><nProt>242260102633747</nProt><digVal>U8IgjbDGmRPSinve4s9TngiwPCQ=</digVal><cStat>100</cStat><xMotivo>Autorizado o uso da NF-e</xMotivo></infProt></protNFe></nfeProc>

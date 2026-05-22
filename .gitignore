@@ -1,0 +1,82 @@
+# XMLs - Não commitar arquivos de dados
+*.xml
+xmls/
+xmls_ok/
+xmls_corrigidos/
+xmls_assinados/
+xmls_erro/
+xmls_erro_nao_recuperaveis/
+xmls_processados/
+xmls_backup/
+xmls_invalidos/
+
+# Relatórios e logs
+relatorio_*.txt
+relatorio_*.csv
+processamento_completo.log
+*.log
+
+# Certificados digitais - CONFIDENCIAL
+*.pfx
+*.pem
+*.p12
+*.p7b
+*.cer
+*.crt
+*certificate*
+*certificado*
+*KRUEGER*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Backup e temporários
+*.bak
+*.tmp
+*.temp
+*~
+.cache/
+.pytest_cache/
+
+# Diretórios do projeto específicos
+COISA/
+.vscode/
+__pycache__/
+
+# Arquivos executáveis
+*.exe
+*.lnk
+XML CORRECT AUDITAR.exe

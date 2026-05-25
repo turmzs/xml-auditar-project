@@ -7,7 +7,11 @@ xmls_assinados/
 xmls_erro/
 xmls_erro_nao_recuperaveis/
 xmls_processados/
+xmls_teste_saida_*/
+xmls_teste_saida_2/
+xmls_teste_*/
 xmls_backup/
+
 xmls_invalidos/
 
 # Relatórios e logs

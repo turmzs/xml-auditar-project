@@ -7,5 +7,5 @@
 - [ ] Implementar função `processar_nfe(...)` em `xmls_gui_app/xml_processor.py` (ou criar novo processador), chamada quando `detectar_tipo` retornar NACIONAL.
 - [ ] Atualizar `process_batch` para usar a função correta por tipo (NFSe vs NFe).
 - [ ] Garantir que assinatura de NFSe/NFe continue funcionando: NFSe usa `assinar_xml` existente; NFe pode continuar usando `XMLProcessorNFe` (se houver integração) ou adaptar assinatura no mesmo fluxo.
-- [ ] Rodar um teste local em um subset de XMLs (ex.: `xmls_teste_saida_2`) e verificar se valores e assinatura ficam consistentes.
+- [ ] Rodar um teste local em um subset de XMLs (ex.: `xmls_teste_saida_2`) e verificar se valores e assinatura ficam consistentes. 
 

@@ -1,0 +1,33 @@
+AUDITAR CONTABILIDADE CONSULTIVA S/S
+SISTEMA INTERNO DE GERENCIAMENTO
+
+Copyright (c) 2024-2025 AUDITAR CONTABILIDADE CONSULTIVA S/S
+Todos os direitos reservados.
+
+SOFTWARE INTERNO
+----------------
+Este software é de uso interno exclusivo da empresa AUDITAR 
+CONTABILIDADE CONSULTIVA S/S e seus colaboradores autorizados.
+
+PERMISSOES
+----------
+✓ Uso interno na empresa
+✓ Modificações para uso interno
+✓ Distribuição para colaboradores autorizados
+
+PROIBICOES
+----------
+✗ Venda ou distribuição comercial
+✗ Uso por terceiros não autorizados
+✗ Engenharia reversa para fins externos
+
+CONTATO
+-------
+Para dúvidas ou suporte interno, contate:
+AUDITAR CONTABILIDADE CONSULTIVA S/S
+
+
+AVISO LEGAL
+-----------
+ESTE SOFTWARE E FORNECIDO "COMO ESTA", SEM GARANTIA DE QUALQUER
+TIPO, EXPRESSA OU IMPLICITA. O USO E POR CONTA E RISCO DO USUARIO.

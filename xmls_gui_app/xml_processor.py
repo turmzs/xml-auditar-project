@@ -5,12 +5,18 @@ import shutil
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-from .xml_processor_nfe_values import processar_nfe_icms_pis_cofins
+try:
+    # Execução como pacote (ex.: `python -m xmls_gui_app...`)
+    from .xml_processor_nfe_values import processar_nfe_icms_pis_cofins
+except ImportError:
+    # Execução solta via `run_gui.py` (path inserido no sys.path)
+    from xml_processor_nfe_values import processar_nfe_icms_pis_cofins
 
 
 try:
     from signxml import XMLSigner, methods
     from cryptography.hazmat.primitives import serialization
+
     HAS_SIGNXML = True
 except ImportError:
     HAS_SIGNXML = False
@@ -48,7 +54,7 @@ class XMLProcessor:
     def registrar_namespaces(self):
         """
         Registra namespaces para evitar prefixos quebrados.
-        
+
         Padrão brasileiro (ICP-Brasil) para NFS-e:
         - Namespace vazio para elementos principais
         - Namespace 'ds' para assinatura digital
@@ -79,7 +85,6 @@ class XMLProcessor:
         return "DESCONHECIDO"
 
     def processar_nfse_prefeitura(self, root, aliquota=0.0365):
-
         """
 
         Processa e corrige valores no XML.
@@ -144,11 +149,11 @@ class XMLProcessor:
             return root
 
         # Verificar se é certificado A1 ou A3
-        cert_type = getattr(self.cert_handler, 'cert_type', 'DESCONHECIDO')
+        cert_type = getattr(self.cert_handler, "cert_type", "DESCONHECIDO")
 
-        if cert_type == 'A1':
+        if cert_type == "A1":
             return self._assinar_a1(root)
-        elif cert_type == 'A3':
+        elif cert_type == "A3":
             return self._assinar_a3(root)
         else:
             self.log(f"  ✗ Tipo de certificado desconhecido: {cert_type}")
@@ -157,7 +162,7 @@ class XMLProcessor:
     def _assinar_a1(self, root):
         """
         Assina XML com certificado A1 (PFX).
-        
+
         Padrão brasileiro (ICP-Brasil) para NFS-e:
         - Algoritmo: RSA-SHA256
         - Método: Enveloped
@@ -172,16 +177,18 @@ class XMLProcessor:
             pem_key = self.cert_handler.private_key.private_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PrivateFormat.PKCS8,
-                encryption_algorithm=serialization.NoEncryption()
+                encryption_algorithm=serialization.NoEncryption(),
             )
-            pem_cert = self.cert_handler.certificate.public_bytes(serialization.Encoding.PEM)
+            pem_cert = self.cert_handler.certificate.public_bytes(
+                serialization.Encoding.PEM
+            )
 
             # Adicionar ID ao elemento raiz se não tiver (necessário para referência)
-            if 'id' not in root.attrib and 'ID' not in root.attrib:
-                root.set('id', 'xades-root-id')
-            
+            if "id" not in root.attrib and "ID" not in root.attrib:
+                root.set("id", "xades-root-id")
+
             # Obter o ID para referência
-            root_id = root.get('id') or root.get('ID')
+            root_id = root.get("id") or root.get("ID")
             reference_uri = f"#{root_id}" if root_id else ""
 
             # Configuração conforme padrão brasileiro ICP-Brasil para NFS-e
@@ -194,12 +201,9 @@ class XMLProcessor:
 
             # Assinar com referência do elemento raiz
             signed_root = signer.sign(
-                root, 
-                key=pem_key, 
-                cert=pem_cert,
-                reference_uri=reference_uri
+                root, key=pem_key, cert=pem_cert, reference_uri=reference_uri
             )
-            
+
             self.log("  ✓ Assinado com sucesso (A1 - ICP-Brasil)")  # noqa
             return signed_root
 
@@ -210,7 +214,7 @@ class XMLProcessor:
     def _assinar_a3(self, root):
         """
         Assina XML com certificado A3 (Token PKCS#11).
-        
+
         Padrão brasileiro (ICP-Brasil) para NFS-e com token.
         """
         try:
@@ -219,7 +223,9 @@ class XMLProcessor:
             self.log("  ✗ PyKCS11 não disponível. Instale: pip install PyKCS11")
             return root
 
-        if self.cert_handler.certificate is None or not hasattr(self.cert_handler, 'session'):
+        if self.cert_handler.certificate is None or not hasattr(
+            self.cert_handler, "session"
+        ):
             self.log("  ✗ Token A3 não conectada ou certificado não carregado")
             return root
 
@@ -233,35 +239,34 @@ class XMLProcessor:
             )
 
             # Converter certificado para PEM
-            pem_cert = self.cert_handler.certificate.public_bytes(serialization.Encoding.PEM)
+            pem_cert = self.cert_handler.certificate.public_bytes(
+                serialization.Encoding.PEM
+            )
 
             # Adicionar ID ao elemento raiz se não tiver
-            if 'id' not in root.attrib and 'ID' not in root.attrib:
-                root.set('id', 'xades-root-id')
-            
+            if "id" not in root.attrib and "ID" not in root.attrib:
+                root.set("id", "xades-root-id")
+
             # Obter o ID para referência
-            root_id = root.get('id') or root.get('ID')
+            root_id = root.get("id") or root.get("ID")
             reference_uri = f"#{root_id}" if root_id else ""
 
             # Para A3, usamos um callback de assinatura que chama a token
             def sign_callback(data_to_sign):
                 """Callback para assinar dados usando a token (padrão ICP-Brasil)."""
                 mechanism = PyKCS11.Mechanism(PyKCS11.CKM_SHA256_RSA_PKCS, None)
-                signature = bytes(self.cert_handler.session.sign(
-                    self.cert_handler.key_object,
-                    data_to_sign,
-                    mechanism
-                ))
+                signature = bytes(
+                    self.cert_handler.session.sign(
+                        self.cert_handler.key_object, data_to_sign, mechanism
+                    )
+                )
                 return signature
 
             # Assinar com ID do elemento raiz
             signed_root = signer.sign(
-                root,
-                key=sign_callback,
-                cert=pem_cert,
-                reference_uri=reference_uri
+                root, key=sign_callback, cert=pem_cert, reference_uri=reference_uri
             )
-            
+
             self.log("  ✓ Assinado com sucesso (A3 - ICP-Brasil)")
             return signed_root
 
@@ -269,9 +274,17 @@ class XMLProcessor:
             self.log(f"  ✗ Erro ao assinar (A3): {str(e)[:50]}")
             return root
 
-    def process_batch(self, pasta_entrada, pasta_corrigidos, pasta_invalidos=None,
-                      pasta_assinados=None, pasta_erro=None, pasta_processados=None,
-                      aliquota=0.0365, gerar_relatorio=True):
+    def process_batch(
+        self,
+        pasta_entrada,
+        pasta_corrigidos,
+        pasta_invalidos=None,
+        pasta_assinados=None,
+        pasta_erro=None,
+        pasta_processados=None,
+        aliquota=0.0365,
+        gerar_relatorio=True,
+    ):
         """
         Processa lote de XMLs com suporte a múltiplas pastas de saída.
 
@@ -287,7 +300,7 @@ class XMLProcessor:
             verbose: Se False (padrão), reduz logging para melhor performance
         """
         self.registrar_namespaces()
-        
+
         # Reset das listas
         self.stats = {"total": 0, "corrigidos": 0, "ok": 0, "erros": 0}
         self.corrigidos_lista = []
@@ -308,14 +321,18 @@ class XMLProcessor:
             os.makedirs(pasta_processados, exist_ok=True)
 
         self.log(f"\n[LENDO] Pasta: {pasta_entrada}")
-        self.log(f"[CERT] Certificado carregado: {HAS_SIGNXML and self.cert_handler.private_key is not None}\n")
+        self.log(
+            f"[CERT] Certificado carregado: {HAS_SIGNXML and self.cert_handler.private_key is not None}\n"
+        )
 
         # Contar arquivos uma única vez
-        arquivos_xml = [f for f in os.listdir(pasta_entrada) if f.lower().endswith(".xml")]
+        arquivos_xml = [
+            f for f in os.listdir(pasta_entrada) if f.lower().endswith(".xml")
+        ]
         total_arquivos = len(arquivos_xml)
-        
+
         self.log(f"[TOTAL] {total_arquivos} arquivos XML encontrados\n")
-        
+
         # Batch logging para melhor performance
         batch_size = 20  # Atualizar GUI a cada 20 arquivos
         batch_logs = []
@@ -349,11 +366,11 @@ class XMLProcessor:
                 self.ok_lista.append(arquivo)
                 if pasta_invalidos:
                     shutil.copy(caminho, os.path.join(pasta_invalidos, arquivo))
-                
+
                 # Log em batch
                 if idx % batch_size == 0 or idx == total_arquivos:
                     self.log(f"[PROGRESSO] {idx}/{total_arquivos} arquivos processados")
-                    for log_msg in batch_logs[-min(5, len(batch_logs)):]:
+                    for log_msg in batch_logs[-min(5, len(batch_logs)) :]:
                         self.log(log_msg)
                 continue
 
@@ -362,8 +379,6 @@ class XMLProcessor:
                 alterado = self.processar_nfse_prefeitura(root, aliquota)
             else:  # NACIONAL (NFe)
                 alterado = processar_nfe_icms_pis_cofins(root, aliquota)
-
-
 
             # Re-assinar e salvar
 
@@ -405,10 +420,12 @@ class XMLProcessor:
 
             # Log em batch a cada 20 arquivos
             if idx % batch_size == 0 or idx == total_arquivos:
-                self.log(f"[PROGRESSO] {idx}/{total_arquivos} ({int(idx*100/total_arquivos)}%)")
+                self.log(
+                    f"[PROGRESSO] {idx}/{total_arquivos} ({int(idx*100/total_arquivos)}%)"
+                )
                 # Mostrar apenas últimos 3 logs para não sobrecarregar GUI
                 if batch_logs:
-                    for log_msg in batch_logs[-min(3, len(batch_logs)):]:
+                    for log_msg in batch_logs[-min(3, len(batch_logs)) :]:
                         self.log(f"  {log_msg}")
                 batch_logs = []
 
@@ -429,7 +446,9 @@ class XMLProcessor:
     def _gerar_relatorio(self, pasta_saida):
         """Gera arquivo de relatório em texto."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        relatorio_path = os.path.join(os.path.dirname(pasta_saida), f"relatorio_{timestamp}.txt")
+        relatorio_path = os.path.join(
+            os.path.dirname(pasta_saida), f"relatorio_{timestamp}.txt"
+        )
 
         try:
             with open(relatorio_path, "w", encoding="utf-8") as f:  # noqa: E501
@@ -437,7 +456,7 @@ class XMLProcessor:
                 f.write("RELATORIO DE PROCESSAMENTO DE XMLs\n")
                 f.write(f"Data: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n")
                 f.write("=" * 60 + "\n\n")
-                
+
                 f.write(f"Total de arquivos processados: {self.stats['total']}\n")
                 f.write(f"Corrigidos e re-assinados: {len(self.corrigidos_lista)}\n")
                 f.write(f"Ja estavam OK: {len(self.ok_lista)}\n")

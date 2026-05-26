@@ -53,7 +53,9 @@ class XMLSignerGUI:
         main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # =============== TIPO DE CERTIFICADO ===============
-        cert_frame = tk.LabelFrame(main_frame, text="Tipo de Certificado", padx=10, pady=10)
+        cert_frame = tk.LabelFrame(
+            main_frame, text="Tipo de Certificado", padx=10, pady=10
+        )
         cert_frame.pack(fill=tk.X, pady=5)
 
         tk.Radiobutton(
@@ -73,38 +75,42 @@ class XMLSignerGUI:
         ).pack(side=tk.LEFT)
 
         # =============== CERTIFICADO A1 ===============
-        self.a1_frame = tk.LabelFrame(main_frame, text="Certificado A1", padx=10, pady=10)
+        self.a1_frame = tk.LabelFrame(
+            main_frame, text="Certificado A1", padx=10, pady=10
+        )
         self.a1_frame.pack(fill=tk.X, pady=5)
 
-        tk.Button(self.a1_frame, text="Selecionar PFX/P12", command=self.select_pfx).pack(
-            side=tk.LEFT, padx=5
-        )
+        tk.Button(
+            self.a1_frame, text="Selecionar PFX/P12", command=self.select_pfx
+        ).pack(side=tk.LEFT, padx=5)
         tk.Label(self.a1_frame, textvariable=self.pfx_path, wraplength=400).pack(
             side=tk.LEFT, fill=tk.X, expand=True
         )
 
         tk.Label(self.a1_frame, text="Senha:").pack(side=tk.LEFT, padx=(10, 5))
-        tk.Entry(self.a1_frame, textvariable=self.pfx_password, show="*", width=15).pack(
-            side=tk.LEFT, padx=5
-        )
+        tk.Entry(
+            self.a1_frame, textvariable=self.pfx_password, show="*", width=15
+        ).pack(side=tk.LEFT, padx=5)
 
-        tk.Button(self.a1_frame, text="Carregar A1", command=self.load_a1_certificate).pack(
-            side=tk.LEFT, padx=5
-        )
+        tk.Button(
+            self.a1_frame, text="Carregar A1", command=self.load_a1_certificate
+        ).pack(side=tk.LEFT, padx=5)
 
         # =============== CERTIFICADO A3 (Oculto por padrão) ===============
-        self.a3_frame = tk.LabelFrame(main_frame, text="Certificado A3 (Token)", padx=10, pady=10)
-
-        tk.Button(self.a3_frame, text="Selecionar Driver DLL", command=self.select_dll).pack(
-            side=tk.LEFT, padx=5
+        self.a3_frame = tk.LabelFrame(
+            main_frame, text="Certificado A3 (Token)", padx=10, pady=10
         )
+
+        tk.Button(
+            self.a3_frame, text="Selecionar Driver DLL", command=self.select_dll
+        ).pack(side=tk.LEFT, padx=5)
         tk.Label(self.a3_frame, textvariable=self.dll_path, wraplength=400).pack(
             side=tk.LEFT, fill=tk.X, expand=True
         )
 
-        tk.Button(self.a3_frame, text="Conectar Token", command=self.connect_a3_token).pack(
-            side=tk.LEFT, padx=5
-        )
+        tk.Button(
+            self.a3_frame, text="Conectar Token", command=self.connect_a3_token
+        ).pack(side=tk.LEFT, padx=5)
 
         # =============== PASTAS ===============
         folder_frame = tk.LabelFrame(main_frame, text="Pastas", padx=10, pady=10)
@@ -113,19 +119,21 @@ class XMLSignerGUI:
         tk.Label(folder_frame, text="Pasta de Entrada (XMLs):").pack(anchor=tk.W)
         input_subfr = tk.Frame(folder_frame)
         input_subfr.pack(fill=tk.X, pady=3)
-        tk.Button(input_subfr, text="Selecionar", command=self.select_input_folder).pack(
-            side=tk.LEFT, padx=5
-        )
+        tk.Button(
+            input_subfr, text="Selecionar", command=self.select_input_folder
+        ).pack(side=tk.LEFT, padx=5)
         tk.Label(input_subfr, textvariable=self.input_folder, wraplength=600).pack(
             side=tk.LEFT, fill=tk.X, expand=True
         )
 
-        tk.Label(folder_frame, text="Pasta de Saída (XMLs Assinados):").pack(anchor=tk.W, pady=(10, 0))
+        tk.Label(folder_frame, text="Pasta de Saída (XMLs Assinados):").pack(
+            anchor=tk.W, pady=(10, 0)
+        )
         output_subfr = tk.Frame(folder_frame)
         output_subfr.pack(fill=tk.X, pady=3)
-        tk.Button(output_subfr, text="Selecionar", command=self.select_output_folder).pack(
-            side=tk.LEFT, padx=5
-        )
+        tk.Button(
+            output_subfr, text="Selecionar", command=self.select_output_folder
+        ).pack(side=tk.LEFT, padx=5)
         tk.Label(output_subfr, textvariable=self.output_folder, wraplength=600).pack(
             side=tk.LEFT, fill=tk.X, expand=True
         )
@@ -140,13 +148,23 @@ class XMLSignerGUI:
         )
 
         tk.Label(config_frame, text="Alíquota (%):").pack(side=tk.LEFT, padx=(20, 5))
-        tk.Entry(config_frame, textvariable=self.aliquota, width=10).pack(side=tk.LEFT, padx=5)
+        tk.Entry(config_frame, textvariable=self.aliquota, width=10).pack(
+            side=tk.LEFT, padx=5
+        )
 
         # =============== LOG ===============
-        log_frame = tk.LabelFrame(main_frame, text="Log de Processamento", padx=5, pady=5)
+        log_frame = tk.LabelFrame(
+            main_frame, text="Log de Processamento", padx=5, pady=5
+        )
         log_frame.pack(fill=tk.BOTH, expand=True, pady=5)
 
-        self.log_text = scrolledtext.ScrolledText(log_frame, height=12, width=80, state=tk.DISABLED)
+        self.log_text = scrolledtext.ScrolledText(
+            log_frame,
+            height=12,
+            width=80,
+            state=tk.DISABLED,
+            font=("Arial", 11),
+        )
         self.log_text.pack(fill=tk.BOTH, expand=True)
 
         # =============== AÇÕES ===============
@@ -154,7 +172,11 @@ class XMLSignerGUI:
         action_frame.pack(fill=tk.X, pady=10)
 
         self.process_btn = tk.Button(
-            action_frame, text="Processar XMLs", command=self.start_processing, bg="green", fg="white"
+            action_frame,
+            text="Processar XMLs",
+            command=self.start_processing,
+            bg="green",
+            fg="white",
         )
         self.process_btn.pack(side=tk.LEFT, padx=5)
 
@@ -177,13 +199,17 @@ class XMLSignerGUI:
 
     def select_pfx(self):
         """Seleciona arquivo PFX."""
-        path = filedialog.askopenfilename(filetypes=[("PFX/P12 Files", "*.pfx *.p12"), ("All Files", "*.*")])
+        path = filedialog.askopenfilename(
+            filetypes=[("PFX/P12 Files", "*.pfx *.p12"), ("All Files", "*.*")]
+        )
         if path:
             self.pfx_path.set(path)
 
     def select_dll(self):
         """Seleciona driver DLL."""
-        path = filedialog.askopenfilename(filetypes=[("DLL Files", "*.dll"), ("All Files", "*.*")])
+        path = filedialog.askopenfilename(
+            filetypes=[("DLL Files", "*.dll"), ("All Files", "*.*")]
+        )
         if path:
             self.dll_path.set(path)
 
@@ -304,14 +330,18 @@ class XMLSignerGUI:
         try:
             self.log_append(LOG_SEPARATOR)
             self.log_append("PROCESSAMENTO DE XMLs INICIADO")
-            self.log_append(f"Data/Hora: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
+            self.log_append(
+                f"Data/Hora: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
+            )
             self.log_append(LOG_SEPARATOR)
             self.log_append("")
 
             input_folder = self.input_folder.get()
             output_folder = self.output_folder.get()
 
-            xml_files = [f for f in os.listdir(input_folder) if f.lower().endswith(".xml")]
+            xml_files = [
+                f for f in os.listdir(input_folder) if f.lower().endswith(".xml")
+            ]
 
             if not xml_files:
                 self.log_append("⚠ Nenhum arquivo XML encontrado na pasta de entrada")
@@ -329,7 +359,9 @@ class XMLSignerGUI:
 
             # Converter alíquota
             try:
-                aliquota = float(self.aliquota.get()) / 100  # Converter de % para decimal
+                aliquota = (
+                    float(self.aliquota.get()) / 100
+                )  # Converter de % para decimal
             except ValueError:
                 aliquota = 0.0365
 
@@ -339,7 +371,7 @@ class XMLSignerGUI:
                 pasta_entrada=input_folder,
                 pasta_corrigidos=output_folder,
                 aliquota=aliquota,
-                gerar_relatorio=True
+                gerar_relatorio=True,
             )
 
             self.log_append("")
@@ -363,7 +395,9 @@ class XMLSignerGUI:
             messagebox.showinfo("Sucesso", "Processamento concluído com sucesso!")
         else:
             self.status_label.config(text=STATUS_DESCONECTADO, fg="red")
-            messagebox.showerror("Erro", "Houve erros durante o processamento. Verifique o log.")
+            messagebox.showerror(
+                "Erro", "Houve erros durante o processamento. Verifique o log."
+            )
 
 
 def main():

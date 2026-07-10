@@ -6,14 +6,13 @@ Ferramenta automatizada para corrigir valores em XMLs (NFS-e e NFe) e re-assinar
 
 ## 🎯 Funcionalidades
 
-- ✅ **Leitura e validação** de XMLs
-- ✅ **Remoção de assinaturas antigas** para permitir alterações
-- ✅ **Correção automática de valores** (regra configurável; padrão 3,65%)
-- ✅ **Re-assinatura com certificado**
+- ✅ Leitura e validação** de XMLs
+- ✅ Remoção de assinaturas antigas** para permitir alterações
+- ✅ Correção automática de valores** (regra configurável; padrão 3,65%)
+- ✅ Re-assinatura com certificado**
   - A1 (arquivo PFX/P12 com senha)
   - A3 (Token via PKCS#11)
-- ✅ **Geração de relatórios/logs**
-- ✅ **Processamento em lote**
+- ✅ Processamento em lote**
   - GUI otimizada (com batch logging)
   - Multiprocessing (quando aplicável)
 
@@ -85,11 +84,10 @@ python run_gui.py
 
 ## 📂 Estrutura de pastas (GUI)
 
-A GUI permite selecionar as pastas de entrada/saída. No projeto, as pastas típicas são:
+A GUI permite selecionar as pastas de entrada/saída. 
+Através do filedialog do tinker.
+Escolha as notas em uma pasta de ENTRADA, e uma de SAIDA.
 
-- `xmls_ok/` (pré-prontos)
-- `xmls_corrigidos/` (corrigidos e re-assinados)
-- `xmls_erro/` (falhas)
 
 ---
 
@@ -120,17 +118,12 @@ ALIQUOTA_PADRAO = 0.0365  # 3.65%
 
 ---
 
-## 🧩 Documentação adicional
-
-- `xmls_gui_app/OTIMIZACOES_IMPLEMENTADAS.md`
-- `xmls_gui_app/ANALISE_PERFORMANCE.md`
-- `xmls_gui_app/README.md`
 
 ---
 
 ## 📝 Status / Versão
 
 - **Versão**: 1.0
-- **Data**: 26/05/2026
-- **Desenvolvido para**: AUDITAR CONTABILIDADE
+- **Data**: 10/07/2026
+- **Desenvolvido para**: AUDITAR CONTABILIDADE por Artur Menezes
 

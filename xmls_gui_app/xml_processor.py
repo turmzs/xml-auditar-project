@@ -395,7 +395,21 @@ class XMLProcessor:
             elif tipo == "NFSE_SPED":
                 alterado = processar_nfse_sped_nacional(root, aliquota)
             elif tipo == "NFE":
-                alterado = processar_nfe_icms_pis_cofins(root, aliquota)
+                # Usando o novo processador com auditoria de valores
+                nfe_proc = NFeProcessor(caminho)
+                # Atualiza a árvore interna do processador com o root atual
+                nfe_proc.root = root
+                
+                # Configura as alíquotas (ajustando a lógica de nomes de chaves)
+                config_rates = {"pis_rate": aliquota, "cofins_rate": aliquota}
+                res = nfe_proc.apply_fiscal_corrections(config_rates)
+                alterado = res["modified"]
+                
+                if alterado:
+                    for c in res["corrections"]:
+                        self.log(f"  -> {c['tax']}: BC {c['bc_before']} -> {c['bc_after']} | Val {c['val_before']} -> {c['val_after']}")
+                    # Atualiza o root do loop principal com as mudanças feitas pelo processador
+                    root = nfe_proc.root
             else:
                 alterado = False
 

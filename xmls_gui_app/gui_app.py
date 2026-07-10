@@ -253,8 +253,13 @@ class XMLSignerGUI:
         if not self.dll_path.get():
             messagebox.showerror("Erro", "Selecione um driver DLL")
             return
+        
+        pin = self.a3_pin.get()
+        if not pin:
+            messagebox.showerror("Erro", "Digite o PIN do Token")
+            return
 
-        success, message = self.cert_a3.load(self.dll_path.get(), "")
+        success, message = self.cert_a3.load(self.dll_path.get(), pin)
 
         if success:
             self.log_append(f"✓ {message}")

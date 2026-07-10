@@ -8,9 +8,11 @@ from datetime import datetime
 try:
     # Execução como pacote (ex.: `python -m xmls_gui_app...`)
     from .xml_processor_nfe_values import processar_nfe_icms_pis_cofins
+    from .xml_processor_nfse_sped import processar_nfse_sped_nacional
 except ImportError:
     # Execução solta via `run_gui.py` (path inserido no sys.path)
     from xml_processor_nfe_values import processar_nfe_icms_pis_cofins
+    from xml_processor_nfse_sped import processar_nfse_sped_nacional
 
 
 try:
@@ -76,12 +78,25 @@ class XMLProcessor:
         return removeu
 
     def detectar_tipo(self, root):
-        """Detecta tipo de XML (PREFEITURA/NACIONAL)."""
+        """Detecta tipo de XML (NFE/NFSE_SPED/PREFEITURA/DESCONHECIDO)."""
         tag = root.tag.lower()
-        if "nfse" in tag and "sped" in tag:
-            return "NACIONAL"
+        
+        # NFe (Nota Fiscal Eletrônica)
+        if "nfe" in tag:
+            return "NFE"
+        
+        # NFSe SPED Nacional (tag RPS com namespace SPED)
+        if "rps" in tag and "sped" in tag:
+            return "NFSE_SPED"
+        
+        # NFSe Prefeitura (padrão antigo)
         if "consultarnfseresposta" in tag:
-            return "PREFEITURA"
+            return "NFSE_PREFEITURA"
+        
+        # NFSe com namespace SPED genericamente
+        if "nfse" in tag and "sped" in tag:
+            return "NFSE_SPED"
+        
         return "DESCONHECIDO"
 
     def processar_nfse_prefeitura(self, root, aliquota=0.0365):
@@ -360,7 +375,7 @@ class XMLProcessor:
             tipo = self.detectar_tipo(root)
 
             # Verificar se é um tipo desconhecido ou inválido
-            if tipo not in ["PREFEITURA", "NACIONAL"]:
+            if tipo == "DESCONHECIDO":
                 batch_logs.append(f"[INVALIDO] {arquivo}")
                 self.invalidos_lista.append(arquivo)
                 self.ok_lista.append(arquivo)
@@ -374,11 +389,15 @@ class XMLProcessor:
                         self.log(log_msg)
                 continue
 
-            # Processar o XML
-            if tipo == "PREFEITURA":
+            # Processar o XML conforme seu tipo
+            if tipo == "NFSE_PREFEITURA":
                 alterado = self.processar_nfse_prefeitura(root, aliquota)
-            else:  # NACIONAL (NFe)
+            elif tipo == "NFSE_SPED":
+                alterado = processar_nfse_sped_nacional(root, aliquota)
+            elif tipo == "NFE":
                 alterado = processar_nfe_icms_pis_cofins(root, aliquota)
+            else:
+                alterado = False
 
             # Re-assinar e salvar
 

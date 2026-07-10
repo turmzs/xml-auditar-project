@@ -1,16 +1,3 @@
-"""Correções de valores para NFe (ICMS + PIS/COFINS).
-
-Observação:
-- A regra fiscal exata (o que é considerado "valor errado") não foi fornecida com
-  fórmula 100% determinística.
-- A implementação abaixo faz uma correção conservadora baseada na intenção do
-  NFSe atual: recalcular campos percentuais/valores aplicando a mesma alíquota
-  (parâmetro `aliquota`) como fator multiplicador.
-
-Se o seu caso real tiver outra regra (ex.: ajuste por diferença entre vBC e vProd,
-ou recalcular conforme CST/CSOSN específico), substitua a função.
-"""
-
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET

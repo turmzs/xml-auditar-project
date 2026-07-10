@@ -11,6 +11,9 @@ xmls_teste_saida_*/
 xmls_teste_saida_2/
 xmls_teste_*/
 xmls_backup/
+.venv/
+build/
+dist/
 
 xmls_invalidos/
 

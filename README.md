@@ -123,7 +123,7 @@ ALIQUOTA_PADRAO = 0.0365  # 3.65%
 
 ## 📝 Status / Versão
 
-- **Versão**: 1.0
-- **Data**: 10/07/2026
+- **Versão**: 6.9
+- **Data**: 24/07/2026
 - **Desenvolvido para**: AUDITAR CONTABILIDADE por Artur Menezes
 

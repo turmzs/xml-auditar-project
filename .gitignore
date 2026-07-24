@@ -87,3 +87,8 @@ __pycache__/
 *.exe
 *.lnk
 XML CORRECT AUDITAR.exe
+packaking/
+tests/
+XMLS TESTES/
+.vscode/
+

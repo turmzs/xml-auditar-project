@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, scrolledtext
 import threading
 import os
+import queue
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from certificate_handler import CertificateA1, CertificateA3
@@ -19,6 +20,11 @@ from config import (
     STATUS_CONCLUIDO,
     LOG_SEPARATOR,
 )
+
+# Tipos de mensagem na fila thread->GUI
+MSG_LOG = "log"
+MSG_DONE_OK = "done_ok"
+MSG_DONE_ERR = "done_err"
 
 
 class XMLSignerGUI:
@@ -37,10 +43,14 @@ class XMLSignerGUI:
         self.pfx_path = tk.StringVar()
         self.pfx_password = tk.StringVar()
         self.dll_path = tk.StringVar()
+        self.a3_pin = tk.StringVar()
         self.input_folder = tk.StringVar()
         self.output_folder = tk.StringVar()
         self.xml_type = tk.StringVar(value="PREFEITURA")
         self.aliquota = tk.StringVar(value="0.0365")
+
+        # Fila thread->GUI para comunicação segura
+        self.gui_queue = None  # será inicializado em start_processing
 
         self.is_processing = False
 
@@ -107,6 +117,11 @@ class XMLSignerGUI:
         tk.Label(self.a3_frame, textvariable=self.dll_path, wraplength=400).pack(
             side=tk.LEFT, fill=tk.X, expand=True
         )
+
+        tk.Label(self.a3_frame, text="PIN:").pack(side=tk.LEFT, padx=(10, 5))
+        tk.Entry(
+            self.a3_frame, textvariable=self.a3_pin, show="*", width=10
+        ).pack(side=tk.LEFT, padx=5)
 
         tk.Button(
             self.a3_frame, text="Conectar Token", command=self.connect_a3_token
@@ -253,7 +268,7 @@ class XMLSignerGUI:
         if not self.dll_path.get():
             messagebox.showerror("Erro", "Selecione um driver DLL")
             return
-        
+
         pin = self.a3_pin.get()
         if not pin:
             messagebox.showerror("Erro", "Digite o PIN do Token")
@@ -270,13 +285,49 @@ class XMLSignerGUI:
             self.status_label.config(text=STATUS_DESCONECTADO, fg="red")
             messagebox.showerror("Erro", message)
 
+    def _log_safe(self, message):
+        """Thread-safe: enfileira mensagem para a GUI processar via root.after()."""
+        if self.gui_queue is not None:
+            try:
+                self.gui_queue.put_nowait((MSG_LOG, message))
+            except queue.Full:
+                # Fila cheia: descarta para não bloquear a thread de processamento
+                pass
+
+    def _poll_queue(self):
+        """Drena a fila e atualiza widgets. Chamado periodicamente pela main thread."""
+        if self.gui_queue is None:
+            return
+        try:
+            while True:
+                kind, payload = self.gui_queue.get_nowait()
+                if kind == MSG_LOG:
+                    self.log_text.config(state=tk.NORMAL)
+                    self.log_text.insert(tk.END, payload + "\n")
+                    self.log_text.see(tk.END)
+                    self.log_text.config(state=tk.DISABLED)
+                elif kind == MSG_DONE_OK:
+                    self._on_done(success=True)
+                    return  # para o polling; será reiniciado em start_processing
+                elif kind == MSG_DONE_ERR:
+                    self._on_done(success=False)
+                    return
+        except queue.Empty:
+            pass
+        # Re-agenda a próxima drenagem
+        if self.is_processing:
+            self.root.after(50, self._poll_queue)
+
     def log_append(self, message):
-        """Adiciona mensagem ao log."""
-        self.log_text.config(state=tk.NORMAL)
-        self.log_text.insert(tk.END, message + "\n")
-        self.log_text.see(tk.END)
-        self.log_text.config(state=tk.DISABLED)
-        self.root.update()
+        """API pública de log. Segura para qualquer thread."""
+        # Chamadas vindas da main thread (botões, etc.) entram direto
+        if threading.current_thread() is threading.main_thread():
+            self.log_text.config(state=tk.NORMAL)
+            self.log_text.insert(tk.END, message + "\n")
+            self.log_text.see(tk.END)
+            self.log_text.config(state=tk.DISABLED)
+        else:
+            self._log_safe(message)
 
     def validate_inputs(self):
         """Valida inputs do usuário."""
@@ -292,9 +343,15 @@ class XMLSignerGUI:
             messagebox.showerror("Erro", "Pasta de entrada não existe")
             return False
 
+        # Cria pasta de saída automaticamente se não existir
         if not os.path.exists(self.output_folder.get()):
-            messagebox.showerror("Erro", "Pasta de saída não existe")
-            return False
+            try:
+                os.makedirs(self.output_folder.get(), exist_ok=True)
+            except OSError as e:
+                messagebox.showerror(
+                    "Erro", f"Não foi possível criar a pasta de saída: {e}"
+                )
+                return False
 
         # Validar certificado
         if self.cert_type.get() == "A1":
@@ -326,12 +383,17 @@ class XMLSignerGUI:
         self.log_text.delete(1.0, tk.END)
         self.log_text.config(state=tk.DISABLED)
 
-        thread = threading.Thread(target=self.process_xmls)
-        thread.daemon = True
+        # Inicializa fila e inicia o polling na main thread
+        self.gui_queue = queue.Queue(maxsize=10000)
+        self.root.after(50, self._poll_queue)
+
+        thread = threading.Thread(target=self.process_xmls, daemon=True)
         thread.start()
 
     def process_xmls(self):
-        """Processa XMLs (executado em thread)."""
+        """Processa XMLs (executado em thread worker)."""
+        # Salva referência ao processador para fechar sessão A3 depois
+        processor = None
         try:
             self.log_append(LOG_SEPARATOR)
             self.log_append("PROCESSAMENTO DE XMLs INICIADO")
@@ -350,7 +412,7 @@ class XMLSignerGUI:
 
             if not xml_files:
                 self.log_append("⚠ Nenhum arquivo XML encontrado na pasta de entrada")
-                self.finish_processing(False)
+                self.gui_queue.put_nowait((MSG_DONE_ERR, None))
                 return
 
             self.log_append(f"Total de XMLs encontrados: {len(xml_files)}")
@@ -364,9 +426,7 @@ class XMLSignerGUI:
 
             # Converter alíquota
             try:
-                aliquota = (
-                    float(self.aliquota.get()) / 100
-                )  # Converter de % para decimal
+                aliquota = float(self.aliquota.get()) / 100
             except ValueError:
                 aliquota = 0.0365
 
@@ -384,14 +444,26 @@ class XMLSignerGUI:
             self.log_append("PROCESSAMENTO CONCLUÍDO COM SUCESSO")
             self.log_append(LOG_SEPARATOR)
 
-            self.finish_processing(True)
+            self.gui_queue.put_nowait((MSG_DONE_OK, None))
 
         except (OSError, ValueError, ET.ParseError) as e:
             self.log_append(f"✗ Erro durante processamento: {str(e)}")
-            self.finish_processing(False)
+            self.gui_queue.put_nowait((MSG_DONE_ERR, None))
+        except Exception as e:  # noqa: BLE001
+            # Captura qualquer outra exceção (ex: erros do signxml) para não
+            # matar a thread silenciosamente.
+            self.log_append(f"✗ Erro inesperado: {type(e).__name__}: {e}")
+            self.gui_queue.put_nowait((MSG_DONE_ERR, None))
+        finally:
+            # Garante limpeza de recursos do certificado (libera sessão A3, etc.)
+            if processor is not None:
+                try:
+                    processor.close()
+                except Exception:  # noqa: BLE001
+                    pass
 
-    def finish_processing(self, success):
-        """Finaliza processamento."""
+    def _on_done(self, success):
+        """Finaliza processamento (executado na main thread)."""
         self.is_processing = False
         self.process_btn.config(state=tk.NORMAL, bg="green")
 
@@ -403,6 +475,8 @@ class XMLSignerGUI:
             messagebox.showerror(
                 "Erro", "Houve erros durante o processamento. Verifique o log."
             )
+        # Libera a fila para a próxima rodada
+        self.gui_queue = None
 
 
 def main():

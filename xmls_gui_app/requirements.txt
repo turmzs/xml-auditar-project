@@ -1,3 +1,13 @@
+# Dependências de runtime do XML Auditar (Assinador A1 & A3)
+
+# Assinatura digital XMLDsig (XML + certificado A1)
 signxml>=2.10.0
+
+# Backend de criptografia usado por signxml
 cryptography>=41.0.0
+
+# Integração com tokens A3 (PKCS#11) - opcional, somente se usar certificado em token
 PyKCS11>=1.5.0
+
+# Parser XML robusto usado por xml_processor_nfe*.py
+lxml>=4.9.0

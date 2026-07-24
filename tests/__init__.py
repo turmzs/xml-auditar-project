@@ -1,0 +1,1 @@
+"""Diretório de testes para o pacote xmls_gui_app."""

@@ -7,10 +7,12 @@ from datetime import datetime
 
 try:
     # Execução como pacote (ex.: `python -m xmls_gui_app...`)
+    from .xml_processor_nfe import NFeProcessor
     from .xml_processor_nfe_values import processar_nfe_icms_pis_cofins
     from .xml_processor_nfse_sped import processar_nfse_sped_nacional
 except ImportError:
     # Execução solta via `run_gui.py` (path inserido no sys.path)
+    from xml_processor_nfe import NFeProcessor
     from xml_processor_nfe_values import processar_nfe_icms_pis_cofins
     from xml_processor_nfse_sped import processar_nfse_sped_nacional
 
@@ -52,6 +54,42 @@ class XMLProcessor:
     def log(self, message):
         """Envia mensagem ao callback."""
         self.output_callback(message)
+
+    def close(self):
+        """Libera recursos do processador (ex: sessão PKCS#11 do A3).
+
+        Chamado pela GUI após o batch para garantir que a token não fica
+        com sessão aberta / PIN preso.
+        """
+        try:
+            handler = getattr(self, "cert_handler", None)
+            if handler is None:
+                return
+            # A3: fecha sessão PKCS#11
+            session = getattr(handler, "session", None)
+            if session is not None:
+                try:
+                    session.logout()
+                except Exception:  # noqa: BLE001
+                    pass
+                try:
+                    session.closeSession()
+                except Exception:  # noqa: BLE001
+                    pass
+                handler.session = None
+            # Limpa chave privada (boa prática de segurança em memória)
+            if hasattr(handler, "private_key"):
+                handler.private_key = None
+            if hasattr(handler, "key_object"):
+                handler.key_object = None
+            if hasattr(handler, "password"):
+                handler.password = None
+        except Exception as e:  # noqa: BLE001
+            # Não bloquear o fluxo por causa do cleanup
+            try:
+                self.log(f"  ! Aviso ao fechar processador: {e}")
+            except Exception:  # noqa: BLE001
+                pass
 
     def registrar_namespaces(self):
         """

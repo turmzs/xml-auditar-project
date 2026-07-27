@@ -1,4 +1,13 @@
-"""Processador de XMLs com re-assinatura digital."""
+"""Processador de XMLs com re-assinatura digital.
+
+A partir da FASE 3.2, este módulo usa o sistema de logging estruturado
+do :mod:`logging_setup` em vez do callback ``output_callback``.
+
+Retrocompatibilidade: se ``output_callback`` for passado, continua
+funcionando. Ambos os caminhos (logger e callback) são chamados quando
+ambos estão configurados.
+"""
+from __future__ import annotations
 
 import os
 import shutil
@@ -18,6 +27,12 @@ except ImportError:
 
 
 try:
+    from .logging_setup import get_logger
+except ImportError:
+    from logging_setup import get_logger
+
+
+try:
     from signxml import XMLSigner, methods
     from cryptography.hazmat.primitives import serialization
 
@@ -29,16 +44,22 @@ except ImportError:
 class XMLProcessor:
     """Processa e re-assina XMLs com certificado digital."""
 
-    def __init__(self, certificate_handler, output_callback=None):
+    def __init__(self, certificate_handler, output_callback=None, logger=None):
         """
         Inicializa processador.
 
         Args:
             certificate_handler: Instância de CertificateA1 ou CertificateA3
-            output_callback: Função para enviar logs (output_callback(mensagem))
+            output_callback: Função legada para enviar logs
+                (``output_callback(mensagem)``). Mantida para retrocompatibilidade.
+            logger: Logger opcional do :mod:`logging`. Se ``None``, usa
+                o logger do módulo.
         """
         self.cert_handler = certificate_handler
-        self.output_callback = output_callback or self._default_output
+        # ``output_callback`` ainda é aceito (retrocompatibilidade com
+        # testes e callers antigos). Logger é o caminho novo/principal.
+        self.output_callback = output_callback
+        self.logger = logger or get_logger(__name__)
         self.stats = {"total": 0, "corrigidos": 0, "ok": 0, "erros": 0}
         # Listas de rastreamento
         self.corrigidos_lista = []
@@ -51,9 +72,24 @@ class XMLProcessor:
         """Callback padrão (apenas print)."""
         print(message)
 
-    def log(self, message):
-        """Envia mensagem ao callback."""
-        self.output_callback(message)
+    def log(self, message, level: str = "info"):
+        """Envia mensagem ao callback e/ou logger.
+
+        Args:
+            message: Texto a registrar.
+            level: Nível do log (``"debug"``, ``"info"``, ``"warning"``,
+                ``"error"``, ``"critical"``). Padrão: ``"info"``.
+        """
+        # Caminho novo: logger estruturado
+        log_fn = getattr(self.logger, level.lower(), self.logger.info)
+        log_fn(message)
+        # Caminho legado: callback (se fornecido)
+        if self.output_callback is not None:
+            try:
+                self.output_callback(message)
+            except Exception:  # noqa: BLE001
+                # Nunca bloquear logging por causa de callback quebrado
+                pass
 
     def close(self):
         """Libera recursos do processador (ex: sessão PKCS#11 do A3).
@@ -482,10 +518,11 @@ class XMLProcessor:
                 except OSError:
                     pass  # Ignorar erros silenciosamente para melhor performance
 
-            except (IOError, ValueError, OSError):  # noqa: F841
+            except (IOError, ValueError, OSError) as e:  # noqa: F841
                 batch_logs.append(f"[ERRO] {arquivo}")
                 self.erros_lista.append(f"{arquivo} (Erro assinatura)")
                 self.stats["erros"] += 1
+                self.log(f"Falha ao salvar {arquivo}: {e}", level="error")
                 if pasta_erro:
                     shutil.copy(caminho, os.path.join(pasta_erro, arquivo))
 

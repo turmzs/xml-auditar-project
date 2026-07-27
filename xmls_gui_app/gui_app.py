@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from certificate_handler import CertificateA1, CertificateA3
 from xml_processor import XMLProcessor
+from logging_setup import setup_logging, get_logger, get_gui_handler
 from config import (
     WINDOW_TITLE,
     WINDOW_WIDTH,
@@ -26,11 +27,19 @@ MSG_LOG = "log"
 MSG_DONE_OK = "done_ok"
 MSG_DONE_ERR = "done_err"
 
+logger = get_logger(__name__)
+
 
 class XMLSignerGUI:
     """Interface gráfica para assinador de XMLs."""
 
-    def __init__(self, root):
+    def __init__(self, root, log_level="INFO"):
+        # Configura logging estruturado para toda a aplicação.
+        # O GuiLogHandler é instalado e fica disponível via get_gui_handler().
+        setup_logging(level=log_level)
+        self.logger = logger
+        self.gui_log_handler = get_gui_handler()
+
         self.root = root
         self.root.title(WINDOW_TITLE)
         self.root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
@@ -295,7 +304,21 @@ class XMLSignerGUI:
                 pass
 
     def _poll_queue(self):
-        """Drena a fila e atualiza widgets. Chamado periodicamente pela main thread."""
+        """Drena a fila e atualiza widgets. Chamado periodicamente pela main thread.
+
+        Drena tanto o ``gui_queue`` (mensagens do processador) quanto o
+        :class:`GuiLogHandler` (registros de logging estruturado).
+        """
+        # 1. Drena logging_setup (registros de logger estruturado)
+        if self.gui_log_handler is not None:
+            try:
+                while True:
+                    levelno, msg = self.gui_log_handler.queue.get_nowait()
+                    self._write_log_line(levelno, msg)
+            except queue.Empty:
+                pass
+
+        # 2. Drena gui_queue (compatibilidade com log_append legada)
         if self.gui_queue is None:
             return
         try:
@@ -317,6 +340,29 @@ class XMLSignerGUI:
         # Re-agenda a próxima drenagem
         if self.is_processing:
             self.root.after(50, self._poll_queue)
+
+    def _write_log_line(self, levelno: int, message: str) -> None:
+        """Escreve uma linha no widget de log com cor conforme o n\u00edvel.
+
+        ERROR/CRITICAL em vermelho, WARNING em laranja escuro, INFO/DEBUG em preto.
+        """
+        import logging as _logging
+        if levelno >= _logging.ERROR:
+            color = "#b00020"  # vermelho
+        elif levelno >= _logging.WARNING:
+            color = "#cc6600"  # laranja escuro
+        else:
+            color = "black"
+        try:
+            self.log_text.config(state=tk.NORMAL)
+            tag_name = f"level_{levelno}"
+            self.log_text.tag_configure(tag_name, foreground=color)
+            self.log_text.insert(tk.END, message + "\n", tag_name)
+            self.log_text.see(tk.END)
+            self.log_text.config(state=tk.DISABLED)
+        except tk.TclError:
+            # Widget pode ter sido destru\u00eddo; ignorar
+            pass
 
     def log_append(self, message):
         """API pública de log. Segura para qualquer thread."""

@@ -21,7 +21,33 @@ for p in candidates:
     if p and p not in sys.path:
         sys.path.insert(0, p)
 
-from gui_app import main
+
+def main():
+    """Inicializa logging e GUI."""
+    import logging
+    from logging_setup import setup_logging, get_logger
+
+    # Em GUI: console OFF por padrão (logs só na GUI + arquivo)
+    # Para ativar logs no console: XML_AUDITAR_LOG_CONSOLE=1
+    # Para ativar DEBUG: XML_AUDITAR_LOG_LEVEL=DEBUG
+    env_console = os.environ.get("XML_AUDITAR_LOG_CONSOLE", "").lower()
+    env_level = os.environ.get("XML_AUDITAR_LOG_LEVEL", "INFO").upper()
+
+    enable_console = env_console in ("1", "true", "yes")
+    setup_logging(level=env_level, enable_console=enable_console)
+
+    logger = get_logger(__name__)
+    logger.info("XML Auditar iniciado (level=%s, console=%s)", env_level, enable_console)
+
+    # Inicia a GUI
+    import tkinter as tk
+    from gui_app import XMLSignerGUI
+
+    root = tk.Tk()
+    # XMLSignerGUI pode reconfigurar logging internamente se quiser
+    XMLSignerGUI(root, log_level=env_level)
+    root.mainloop()
+
 
 if __name__ == "__main__":
     main()
